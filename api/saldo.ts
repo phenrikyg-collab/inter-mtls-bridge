@@ -1,8 +1,19 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { interApiRequest } from "./_shared/interClient";
 
-// GET /api/inter/saldo (opcional: ?dataSaldo=2026-08-11)
+function setCors(res: VercelResponse) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+}
+
+// GET /api/saldo (opcional: ?dataSaldo=2026-08-11)
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  setCors(res);
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
   try {
     const { dataSaldo } = req.query;
     const path = dataSaldo ? `/banking/v2/saldo?dataSaldo=${dataSaldo}` : "/banking/v2/saldo";

@@ -1,8 +1,19 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { interApiRequest } from "./_shared/interClient";
 
-// GET /api/inter/extrato?dataInicio=2026-08-01&dataFim=2026-08-11
+function setCors(res: VercelResponse) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+}
+
+// GET /api/extrato?dataInicio=2026-08-01&dataFim=2026-08-11
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  setCors(res);
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
   try {
     const { dataInicio, dataFim } = req.query;
     if (!dataInicio || !dataFim) {

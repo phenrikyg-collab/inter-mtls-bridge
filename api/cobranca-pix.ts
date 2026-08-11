@@ -1,10 +1,20 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { interApiRequest } from "./_shared/interClient";
 
-// POST /api/inter/cobranca-pix
+function setCors(res: VercelResponse) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+}
+
+// POST /api/cobranca-pix
 // Body esperado: { valor: "150.00", chave: "SUA_CHAVE_PIX_INTER", nome_devedor?, cpf_cnpj_devedor?, ... }
-// Cria uma cobranca Pix imediata (endpoint /pix/v2/cob), retorna o txid + payload copia-e-cola.
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  setCors(res);
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
   if (req.method !== "POST") {
     res.status(405).json({ error: "Method Not Allowed -- use POST" });
     return;
