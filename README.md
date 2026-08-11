@@ -1,6 +1,6 @@
 # inter-mtls-bridge
 
-Ponte mTLS para a API do Banco Inter (autenticação mútua + OAuth 2.0). O Supabase (Deno) não suporta mTLS de saída de forma confiável, então essa camada Node.js/Vercel resolve a autenticação e repassa as chamadas — mesmo padrão usado no `bradesco-mtls-bridge`.
+Ponte mTLS para a API do Banco Inter (autenticação mútua + OAuth 2.0). O Supabase (Deno) não suporta mTLS de saída de forma confiável, então essa camada Node.js/Vercel resolve a autenticação e repassa as chamadas mesmo padrão usado no `bradesco-mtls-bridge`.
 
 ## Variáveis de ambiente
 Configurar no painel do Vercel (Project Settings → Environment Variables):
